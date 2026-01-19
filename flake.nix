@@ -34,19 +34,19 @@
               dfu-util
 
               (writeShellScriptBin "build-crkbd" ''
-                exec qmk compile -kb crkbd/rev4_1/standard -km hop
+                exec ${pkgs.qmk}/bin/qmk compile -kb crkbd/rev4_1/standard -km hop
               '')
               (writeShellScriptBin "generate-compile-commands" ''
-                exec qmk compile -kb crkbd/rev4_1/standard -km hop --compiledb
+                exec ${pkgs.qmk}/bin/qmk compile -kb crkbd/rev4_1/standard -km hop --compiledb
               '')
               (writeShellScriptBin "flash-crkbd" ''
-                exec qmk flash -kb crkbd/rev4_1/standard -km hop
+                exec ${pkgs.qmk}/bin/qmk flash -kb crkbd/rev4_1/standard -km hop
               '')
             ];
 
             shellHook = /* bash */ ''
-              set -x
               if ! git remote | grep -q "upstream"; then
+                echo "Configuring upstream remote..."
                 git remote add upstream https://github.com/qmk/qmk_firmware.git
               fi
 
@@ -55,9 +55,11 @@
               export XDG_CONFIG_DIRS="$QMK_HOME/.nvim_config:$XDG_CONFIG_DIRS"
 
               echo "QMK_HOME set to $QMK_HOME"
+              echo "Added neovim config: $QMK_HOME/.nvim_config"
               echo "Using QMK from: ${pkgs.qmk}"
               echo "Run 'qmk setup' if this is your first time."
-              echo "QMK version: $(qmk --version)"
+
+              command zsh && exit
             '';
           };
         }
