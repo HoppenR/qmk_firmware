@@ -40,7 +40,15 @@
                 exec ${pkgs.qmk}/bin/qmk compile -kb crkbd/rev4_1/standard -km hop --compiledb
               '')
               (writeShellScriptBin "flash-crkbd" ''
-                exec ${pkgs.qmk}/bin/qmk flash -kb crkbd/rev4_1/standard -km hop
+                build-crkbd
+                DEVICE="/dev/disk/by-label/RPI-RP2"
+                echo "Waiting for device RPI-RP2 to appear..."
+                while [ ! -b "$DEVICE" ]; do
+                  sleep 1
+                done
+                udisksctl mount --block-device=$DEVICE
+                cp $QMK_HOME/.build/crkbd_rev4_1_standard_hop.uf2 /run/media/christoffer/RPI-RP2
+                exec sync
               '')
             ];
 
