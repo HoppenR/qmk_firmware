@@ -36,6 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define RGB_MATRIX_VAL_STEP 8
 #    define RGB_MATRIX_SPD_STEP 10
 
+#    define SPLIT_LAYER_STATE_ENABLE
+
 #    define ENABLE_RGB_MATRIX_BREATHING
 #    define ENABLE_RGB_MATRIX_CYCLE_ALL
 #    define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
