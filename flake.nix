@@ -45,8 +45,6 @@
               '')
             ];
 
-            NIX_CLANGD_BIN = "${pkgs.clang-tools}/bin/clangd";
-
             shellHook = /* bash */ ''
               if ! git remote | grep -q "upstream"; then
                 echo "Configuring upstream remote..."
