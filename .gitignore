@@ -28,6 +28,11 @@
 index.html
 firmware_list.json
 
+# Nix related
+.envrc
+.direnv
+_nix_profile*
+
 # QMK-specific
 api_data/v1
 quantum/version.h

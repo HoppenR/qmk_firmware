@@ -56,6 +56,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // clang-format on
 
+enum custom_keycodes {
+    TERM_ESC = SAFE_RANGE,
+};
+
 const uint16_t PROGMEM arng_combo[] = {SE_P, SE_ADIA, COMBO_END};
 const uint16_t PROGMEM scln_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 const uint16_t PROGMEM alt_combo[]  = {KC_LSFT, MO(2), COMBO_END};
@@ -72,15 +76,10 @@ uint16_t COMBO_LEN = ARRAY_SIZE(key_combos);
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case SE_GRV:
-                SEND_STRING("`");
+            case TERM_ESC: {
+                SEND_STRING(SS_LCTL("\\n"));
                 return false;
-            case SE_CIRC:
-                SEND_STRING("^");
-                return false;
-            case SE_TILD:
-                SEND_STRING("~");
-                return false;
+            }; break;
         }
     }
     return true;
@@ -139,9 +138,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       SE_SECT, SE_EXLM, SE_DQUO, SE_HASH, SE_CURR, SE_PERC,                      SE_AMPR, SE_BSLS,  SE_EQL, SE_QUES, SE_ACUT,  KC_DEL,
   /*|--------+--------+--------+--------+--------+-------*/ KC_PGDN,   KC_PGUP,/*-------+--------+--------+--------+--------+-------*/
-      KC_LCTL, SE_LDAQ, SE_LCBR, SE_LBRC, SE_LPRN, SE_LABK,                      SE_RABK, SE_RPRN, SE_RBRC, SE_RCBR, SE_RDAQ, KC_BSPC,
+     TERM_ESC, SE_LDAQ, SE_LCBR, SE_LBRC, SE_LPRN, SE_LABK,                      SE_RABK, SE_RPRN, SE_RBRC, SE_RCBR, SE_RDAQ, KC_BSPC,
   /*|--------+--------+--------+--------+--------+-------*/ SE_CIRC,    SE_DLR,/*-------+--------+--------+--------+--------+-------*/
-      KC_LSFT, SE_EURO,  SE_PND,   SE_AT, SE_HALF, XXXXXXX,                      SE_ASTR, SE_TILD, SE_PIPE,  SE_GRV, XXXXXXX, XXXXXXX,
+      KC_PSCR, SE_EURO,  SE_PND,   SE_AT, SE_HALF, XXXXXXX,                      SE_ASTR, SE_TILD, SE_PIPE,  SE_GRV, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LSFT,   MO(3),  KC_SPC,    KC_ENT,  _______, KC_LCTL
                                       //`--------------------------'  `--------------------------'

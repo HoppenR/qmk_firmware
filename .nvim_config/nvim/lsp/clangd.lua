@@ -1,5 +1,5 @@
 local qmk_root = os.getenv("QMK_HOME")
-local clangd_bin = os.getenv("NIX_CLANGD_PATH")
+local clangd_bin = os.getenv("NIX_CLANGD_BIN")
 
 if not (qmk_root and clangd_bin) then return end
 
